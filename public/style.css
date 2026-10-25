@@ -1,0 +1,215 @@
+/* PIZZA NAPOLI — Bootstrap layout with minimal custom styling */
+:root {
+    --wine: #990d1d;
+    --cream: #f8f6f1;
+    --ink: #211b18;
+}
+body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: Arial,Helvetica,sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+main {
+    flex: 1;
+}
+h1,h2,h3,.brand,.footer-brand {
+    font-family: Georgia,'Times New Roman',serif;
+}
+h1 {
+    font-size: clamp(2.4rem,5vw,4rem);
+    font-weight: 700;
+    line-height: 1.12;
+    margin-bottom: 1.2rem;
+}
+h1 span,.brand span,.footer-brand span,.price,.eyebrow {
+    color: var(--wine);
+}
+h2 {
+    font-size: clamp(1.8rem,3vw,2.5rem);
+}
+a {
+    color: var(--wine);
+    text-decoration: none;
+}
+a: hover {
+    color: #6e0a16;
+    text-decoration: underline;
+}
+.site-header {
+    background: #fff;
+}
+.site-header a {
+    color: var(--ink);
+}
+.site-header .nav-link.active,.cart-link {
+    color: var(--wine)!important;
+    font-weight: 700;
+}
+.brand strong {
+    font-size: 1.75rem;
+    line-height: 1;
+    display: block;
+    color: var(--ink);
+}
+.brand small {
+    font-family: Arial,sans-serif;
+    font-size: .6rem;
+    letter-spacing: .24em;
+    color: #555;
+    display: block;
+    margin-top: 6px;
+}
+.footer-brand {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--ink);
+}
+.site-footer a {
+    margin-right: 12px;
+    color: var(--ink);
+}
+.btn-brand {
+    background: var(--wine);
+    border: 1px solid var(--wine);
+    color: white;
+    padding: .7rem 1.4rem;
+    border-radius: 3px;
+    font-weight: 600;
+}
+.btn-brand:hover {
+    background: #770916;
+    border-color: #770916;
+    color: white;
+    text-decoration: none;
+}
+.btn-outline-brand {
+    border: 1px solid var(--wine);
+    color: var(--wine);
+}
+.btn-outline-brand:hover {
+    background: var(--wine);
+    color: white;
+}
+.hero {
+    background: #f4efe8;
+}
+.hero-image {
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+}
+.pizza-thumb {
+    width: 100%;
+    height: 225px;
+    object-fit: cover;
+    display: block;
+}
+.pizza-card h3 {
+    font-size: 1.55rem;
+    font-weight: 700;
+}
+.price {
+    font-size: 1.45rem;
+    font-weight: 700;
+    font-family: Georgia,serif;
+}
+.price-lg {
+    font-size: 2rem;
+    margin: 1.5rem 0;
+}
+.detail-image {
+    width: 100%;
+    height: 530px;
+    object-fit: cover;
+}
+.ingredients {
+    padding-left: 1.4rem;
+    line-height: 2;
+}
+.quantity-input {
+    width: 85px;
+}
+.form-panel,.summary-box {
+    background: #fff;
+    border: 1px solid #d9d1c6;
+    padding: 2rem;
+    max-width: 620px;
+}
+.form-control {
+    border-radius: 2px;
+    padding: .7rem;
+}
+.cart-item img {
+    width: 165px;
+    height: 125px;
+    object-fit: cover;
+}
+.eyebrow {
+    font-size: .8rem;
+    letter-spacing: .25em;
+}
+.simple-note {
+    max-width: 900px;
+}
+@media(max-width:767px) {
+    .hero-image {
+        height: 290px;
+    }
+    .detail-image {
+        height: 330px;
+    }
+    .pizza-thumb {
+        height: 240px;
+    }
+    .form-panel,.summary-box {
+        padding: 1.3rem;
+    }
+    .brand strong {
+        font-size: 1.45rem;
+    }
+}
+/* Simple, clearly separated menu cards */
+.menu-intro {
+    border-bottom: 1px solid #ded7ce;
+    padding-bottom: 2rem;
+}
+.pizza-card {
+    background: #fff;
+    border: 1px solid #e5ded5;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.pizza-thumb {
+    height: 250px;
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+}
+.pizza-card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.pizza-card-body .btn {
+    margin-top: auto;
+}
+.empty-cart {
+    max-width: 540px;
+    background: #fff;
+    border: 1px solid #e5ded5;
+    padding: 4rem 2rem;
+    margin-top: 3rem;
+}
+@media(max-width:767px) {
+    .pizza-thumb {
+        height: 240px;
+    }
+    .pizza-card-body {
+        padding: 1.25rem;
+    }
+}
