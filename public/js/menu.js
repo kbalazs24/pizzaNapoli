@@ -51,7 +51,7 @@ async function loadPizzas() {
             image.alt = pizza.name + " pizza";
             image.loading = "lazy";
             image.decoding = "async";
-            image.src = pizza.image_path || pizzaImages[pizza.name] || "images/margherita.jpg";
+            image.src = pizzaImages[pizza.name] || "images/margherita.jpg";
             imageLink.append(image);
 
             const body = document.createElement("div");
@@ -62,11 +62,11 @@ async function loadPizzas() {
             const price = document.createElement("p");
             price.className = "price mb-3";
             price.textContent = Number(pizza.price).toLocaleString("hu-HU") + " Ft";
-            const button = document.createElement("a");
+            const pizzalink = document.createElement("a");
             button.className = "btn btn-brand w-100";
             button.href = page || "menu.html";
             button.textContent = "View Pizza";
-            body.append(heading, price, button);
+            body.append(heading, price, pizzalink);
             article.append(imageLink, body);
             column.append(article);
             container.append(column);
