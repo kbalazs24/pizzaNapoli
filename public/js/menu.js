@@ -8,7 +8,7 @@ const pizzaPages = {
 };
 
 const pizzaImages = {
-    "Marinara": "/images/.marinara.webp",
+    "Marinara": "/images/marinara.webp",
     "Margherita": "/images/margherita.jpg",
     "Cosacca": "/images/cossaca.webp",
     "Margherita Extra": "/images/margherita-extra.jpg",
