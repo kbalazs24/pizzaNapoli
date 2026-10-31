@@ -10,7 +10,7 @@ const pizzaPages = {
 const pizzaImages = {
     "Marinara": "/images/marinara.webp",
     "Margherita": "/images/margherita.jpg",
-    "Cosacca": "/images/cossaca.webp",
+    "Cosacca": "/images/cosacca.webp",
     "Margherita Extra": "/images/margherita-extra.jpg",
     "Salsiccia e Friarielli": "/images/Salsiccia e Friarielli.webp",
     "Provola e Pepe": "/images/Provola e Pepe.avif",
@@ -62,10 +62,10 @@ async function loadPizzas() {
             const price = document.createElement("p");
             price.className = "price mb-3";
             price.textContent = Number(pizza.price).toLocaleString("hu-HU") + " Ft";
-            const pizzalink = document.createElement("a");
-            button.className = "btn btn-brand w-100";
-            button.href = page || "menu.html";
-            button.textContent = "View Pizza";
+           const pizzalink = document.createElement("a");
+            pizzalink.className = "btn btn-brand w-100";
+            pizzalink.href = page || "menu.html";
+            pizzalink.textContent = "View Pizza";
             body.append(heading, price, pizzalink);
             article.append(imageLink, body);
             column.append(article);
