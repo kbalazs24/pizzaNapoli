@@ -25,27 +25,23 @@
       </div>
     </div>
   </header>
-  <main class="container py-5" data-pizza-id="1">
+  <main class="container py-5" data-pizza-name="Marinara" data-pizza-id="1">
     <a class="back-link" href="menu.html">&larr; Back to Menu</a>
     <div class="row g-5 align-items-start mt-2">
       <div class="col-lg-7"><img id="pizza-image" alt="Marinara" class="detail-image" src="images/marinara.webp"></div>
       <div class="col-lg-5">
-        <h1 id="pizza-name">Marinara</h1>
-        <p id="pizza-price" class="price price-lg">2 900 Ft</p>
-        <p class="lead">The original Neapolitan classic. Sweet tomato, fragrant garlic and oregano on a light, wood-fired crust.</p>
+        <h1 id="pizza-name">Loading...</h1>
+        <p id="pizza-price" class="price price-lg"></p>
+        <p id="pizza-description" class="lead"></p>
         <hr class="my-4">
         <h2 class="h3">Ingredients</h2>
-        <ul class="ingredients">
-          <li>San Marzano tomatoes</li>
-          <li>Garlic</li>
-          <li>Oregano</li>
-          <li>Extra virgin olive oil</li>
-        </ul>
+        <ul id="pizza-ingredients" class="ingredients"></ul>
         <div class="d-flex align-items-center gap-3 my-4">
           <label for="quantity">Quantity</label>
           <input class="form-control quantity-input" id="quantity" min="1" type="number" value="1">
         </div>
-        <button id="add-to-cart" class="btn btn-brand w-100" type="button">Add to Cart</button>
+        <button id="add-to-cart" class="btn btn-brand w-100" type="button" disabled>Add to Cart</button>
+        <p id="pizza-error" class="text-danger mt-3" role="alert" hidden></p>
       </div>
     </div>
     <section class="simple-note border-top mt-5 pt-4">
