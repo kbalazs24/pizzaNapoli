@@ -27,6 +27,24 @@ app.get("/api/pizzas", async (req, res) => {
     }
 });
 
+app.get("/api/pizzas/:id", async (req, res) => {
+    try {
+        const pizzaId = Number(req.params.id);
+        if (!Number.isSafeInteger(pizzaId) || pizzaId < 1) {
+            return res.status(400).json({ error: "Invalid pizza ID" });
+        }
+        const [pizzas] = await pool.query("SELECT * FROM pizzas WHERE id = ?", [pizzaId]);
+        if (pizzas.length === 0) {
+            return res.status(404).json({ error: "Pizza not found" });
+        }
+        res.json(pizzas[0]);
+    } catch (error) {
+        console.error("Could not load pizza:", error);
+        res.status(500).json({ error: "Database error" });
+    }
+});
+
+
 async function startServer() {
     try {
         await pool.query("SELECT 1");
