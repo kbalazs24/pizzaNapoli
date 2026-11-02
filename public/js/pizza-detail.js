@@ -1,39 +1,40 @@
-// The image stays in each HTML file; all textual pizza data comes from MySQL.
 async function loadPizza() {
-  const main = document.querySelector("main[data-pizza-name]");
-  const name = main.dataset.pizzaName;
-  const errorElement = document.getElementById("pizza-error");
+  const name = document.querySelector("main[data-pizza-name]").dataset.pizzaName;
+  const button = document.getElementById("add-to-cart");
   try {
     const response = await fetch("/api/pizzas");
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const pizzas = await response.json();
-    if (!Array.isArray(pizzas)) throw new Error("Invalid API response");
     const pizza = pizzas.find(item => item.name === name);
-    if (!pizza) throw new Error("Pizza not found: " + name);
-    if (typeof pizza.description !== "string" || !pizza.description.trim()) {
-      throw new Error("Missing description in database: " + name);
-    }
-    if (typeof pizza.ingredients !== "string") {
-      throw new Error("Invalid ingredients in database: " + name);
-    }
-    const ingredients = pizza.ingredients.split(",").map(item => item.trim()).filter(Boolean);
+    if (!pizza) throw new Error("Pizza not found.");
+
     document.getElementById("pizza-name").textContent = pizza.name;
-    document.getElementById("pizza-price").textContent = Number(pizza.price).toLocaleString("hu-HU") + " Ft";
+    document.getElementById("pizza-price").textContent = `${pizza.price.toLocaleString("hu-HU")} Ft`;
     document.getElementById("pizza-description").textContent = pizza.description;
     const list = document.getElementById("pizza-ingredients");
     list.replaceChildren();
-    for (const ingredient of ingredients) {
+    for (const ingredient of pizza.ingredients.split(",")) {
       const li = document.createElement("li");
-      li.textContent = ingredient;
-      list.append(li);
+      li.textContent = ingredient.trim();
+      list.appendChild(li);
     }
-    document.title = pizza.name + " | PIZZA NAPOLI";
-    // The cart feature is not implemented yet.
+
+    button.disabled = false;
+    button.addEventListener("click", () => {
+      const quantity = Number(document.getElementById("quantity").value);
+      if (!Number.isInteger(quantity) || quantity < 1 || quantity > 100) {
+        alert("Choose a quantity between 1 and 100.");
+        return;
+      }
+      addToCart(pizza.id, quantity);
+      alert("Pizza added to cart!");
+    });
   } catch (error) {
-    console.error("Could not load pizza details:", error);
+    console.error(error);
     document.getElementById("pizza-name").textContent = "Pizza unavailable";
-    errorElement.textContent = "Could not load pizza details. Check the API and database.";
-    errorElement.hidden = false;
+    const message = document.getElementById("pizza-error");
+    message.textContent = "Could not load pizza details.";
+    message.hidden = false;
   }
 }
 loadPizza();
