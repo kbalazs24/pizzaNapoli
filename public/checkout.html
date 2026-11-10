@@ -9,6 +9,7 @@
   <script src="js/cart-storage.js" defer></script>
   <script src="js/auth-header.js" defer></script>
   <script src="js/checkout.js" defer></script>
+  <script src="js/checkout-account.js" defer></script>
 </head>
 <body>
   <header class="site-header border-bottom">
@@ -33,6 +34,7 @@
       <section class="col-lg-7">
         <h2 class="h3 mb-4">Delivery details</h2>
         <form id="checkout-form" class="form-panel">
+          <p id="checkout-login-hint" class="text-muted d-none">Have an account? <a href="login.html">Log in</a> to use your saved details.</p>
           <label class="form-label" for="customer-name">Full name</label>
           <input class="form-control mb-3" id="customer-name" type="text" maxlength="100" autocomplete="name" required>
           <label class="form-label" for="customer-email">Email</label>
@@ -45,6 +47,10 @@
           <input class="form-control mb-3" id="customer-city" type="text" maxlength="100" autocomplete="address-level2" required>
           <label class="form-label" for="customer-address">Street address</label>
           <input class="form-control mb-3" id="customer-address" type="text" maxlength="255" autocomplete="street-address" required>
+           <div id="saved-address-block" class="mb-3 d-none">
+            <label class="form-label" for="saved-address">Saved address</label>
+            <select class="form-select" id="saved-address"></select>
+          </div>
           <label class="form-label" for="customer-notes">Notes (optional)</label>
           <textarea class="form-control mb-4" id="customer-notes" rows="3"></textarea>
           <button id="place-order" class="btn btn-brand w-100" type="submit" disabled>Place Order</button>
