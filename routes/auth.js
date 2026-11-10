@@ -1,5 +1,6 @@
 const express = require("express");
 const pool = require("../db/connection");
+const requireAuth = require("../middleware/require-auth");
 const { hashPassword, verifyPassword } = require("../utils/password");
 
 const router = express.Router();
@@ -16,37 +17,54 @@ function startSession(req, userId) {
   });
 }
 
-router.post("/register", async (req, res) => {
-  const { name, email, phone, password } = req.body || {};
-
+function validateProfile({ name, email, phone }) {
   if (typeof name !== "string" || !name.trim() || name.trim().length > 100) {
-    return res.status(400).json({ error: "Please enter your full name." });
+    return { error: "Please enter your full name." };
   }
   if (typeof email !== "string" || email.length > 255 || !EMAIL_PATTERN.test(email.trim())) {
-    return res.status(400).json({ error: "Please enter a valid email address." });
-  }
-  if (typeof password !== "string" || password.length < 8 || password.length > 128) {
-    return res.status(400).json({ error: "Password must be 8-128 characters long." });
+    return { error: "Please enter a valid email address." };
   }
   if (phone !== undefined && phone !== null && (typeof phone !== "string" || phone.trim().length > 30)) {
-    return res.status(400).json({ error: "Invalid phone number." });
+    return { error: "Invalid phone number." };
+  }
+  return {
+    value: {
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      phone: typeof phone === "string" && phone.trim() ? phone.trim() : null
+    }
+  };
+}
+
+async function findUserById(userId) {
+  const [users] = await pool.query(
+    "SELECT id, name, email, phone, role FROM users WHERE id = ?",
+    [userId]
+  );
+  return users[0] || null;
+}
+
+router.post("/register", async (req, res) => {
+  const body = req.body || {};
+  const profile = validateProfile(body);
+  if (profile.error) {
+    return res.status(400).json({ error: profile.error });
+  }
+  if (typeof body.password !== "string" || body.password.length < 8 || body.password.length > 128) {
+    return res.status(400).json({ error: "Password must be 8-128 characters long." });
   }
 
-  const cleanName = name.trim();
-  const cleanEmail = email.trim().toLowerCase();
-  const cleanPhone = typeof phone === "string" && phone.trim() ? phone.trim() : null;
+  const { name, email, phone } = profile.value;
 
   try {
-    const passwordHash = await hashPassword(password);
+    const passwordHash = await hashPassword(body.password);
     const [result] = await pool.query(
       "INSERT INTO users (name, email, password_hash, phone) VALUES (?, ?, ?, ?)",
-      [cleanName, cleanEmail, passwordHash, cleanPhone]
+      [name, email, passwordHash, phone]
     );
 
     await startSession(req, result.insertId);
-    res.status(201).json({
-      user: { id: result.insertId, name: cleanName, email: cleanEmail, phone: cleanPhone, role: "customer" }
-    });
+    res.status(201).json({ user: await findUserById(result.insertId) });
   } catch (error) {
     if (error.code === "ER_DUP_ENTRY") {
       return res.status(409).json({ error: "An account with this email already exists." });
@@ -65,7 +83,7 @@ router.post("/login", async (req, res) => {
 
   try {
     const [users] = await pool.query(
-      "SELECT id, name, email, phone, role, password_hash FROM users WHERE email = ?",
+      "SELECT id, password_hash FROM users WHERE email = ?",
       [email.trim().toLowerCase()]
     );
     const user = users[0];
@@ -76,9 +94,7 @@ router.post("/login", async (req, res) => {
     }
 
     await startSession(req, user.id);
-    res.json({
-      user: { id: user.id, name: user.name, email: user.email, phone: user.phone, role: user.role }
-    });
+    res.json({ user: await findUserById(user.id) });
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ error: "Could not log in." });
@@ -96,23 +112,39 @@ router.post("/logout", (req, res) => {
   });
 });
 
-router.get("/me", async (req, res) => {
-  if (!req.session.userId) {
-    return res.status(401).json({ error: "Not logged in." });
-  }
-
+router.get("/me", requireAuth, async (req, res) => {
   try {
-    const [users] = await pool.query(
-      "SELECT id, name, email, phone, role FROM users WHERE id = ?",
-      [req.session.userId]
-    );
-    if (!users.length) {
-      return res.status(401).json({ error: "Not logged in." });
+    const user = await findUserById(req.session.userId);
+    if (!user) {
+      return res.status(401).json({ error: "Please log in." });
     }
-    res.json({ user: users[0] });
+    res.json({ user });
   } catch (error) {
     console.error("Me error:", error);
     res.status(500).json({ error: "Could not load user." });
+  }
+});
+
+router.put("/me", requireAuth, async (req, res) => {
+  const profile = validateProfile(req.body || {});
+  if (profile.error) {
+    return res.status(400).json({ error: profile.error });
+  }
+
+  const { name, email, phone } = profile.value;
+
+  try {
+    await pool.query(
+      "UPDATE users SET name = ?, email = ?, phone = ? WHERE id = ?",
+      [name, email, phone, req.session.userId]
+    );
+    res.json({ user: await findUserById(req.session.userId) });
+  } catch (error) {
+    if (error.code === "ER_DUP_ENTRY") {
+      return res.status(409).json({ error: "An account with this email already exists." });
+    }
+    console.error("Profile update error:", error);
+    res.status(500).json({ error: "Could not save changes." });
   }
 });
 
