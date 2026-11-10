@@ -8,6 +8,7 @@
   <link href="style.css" rel="stylesheet">
   <script src="js/cart-storage.js" defer></script>
   <script src="js/auth-header.js" defer></script>
+  <script src="js/addresses.js" defer></script>
 </head>
 <body>
   <header class="site-header border-bottom">
@@ -26,12 +27,27 @@
       </div>
     </div>
   </header>
-  <main class="container py-5"><h1>Saved Addresses</h1><div class="form-panel mt-4">
-    <label class="form-label" for="street">Street address</label><input class="form-control mb-3" id="street">
-    <label class="form-label" for="city">City</label><input class="form-control mb-3" id="city" value="Budapest">
-    <label class="form-label" for="postal">Postal code</label><input class="form-control mb-4" id="postal">
-    <button class="btn btn-brand" type="button">Save Address</button>
-  </div></main>
+   <main class="container py-5">
+    <h1>Saved Addresses</h1>
+    <p><a href="account.html">&larr; Back to Account</a></p>
+    <div id="address-message" class="alert d-none" role="alert"></div>
+    <div id="address-list" class="row g-3 mt-2"></div>
+    <p id="address-empty" class="text-muted mt-3 d-none">You have no saved addresses yet.</p>
+    <div class="form-panel mt-5">
+      <h2 id="address-form-title" class="h4 mb-4">Add a new address</h2>
+      <form id="address-form">
+        <label class="form-label" for="street">Street address</label><input class="form-control mb-3" id="street" maxlength="255" autocomplete="street-address" required>
+        <label class="form-label" for="city">City</label><input class="form-control mb-3" id="city" value="Budapest" maxlength="100" autocomplete="address-level2" required>
+        <label class="form-label" for="postal">Postal code</label><input class="form-control mb-3" id="postal" maxlength="10" autocomplete="postal-code" required>
+        <div class="form-check mb-4">
+          <input class="form-check-input" type="checkbox" id="is-default">
+          <label class="form-check-label" for="is-default">Use as my default address</label>
+        </div>
+        <button class="btn btn-brand" type="submit">Save Address</button>
+        <button id="address-cancel" class="btn btn-outline-secondary ms-2 d-none" type="button">Cancel</button>
+      </form>
+    </div>
+  </main>
   <footer class="site-footer border-top mt-auto">
     <div class="container py-4">
       <div class="row gy-3 align-items-center">
