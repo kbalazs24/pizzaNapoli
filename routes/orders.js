@@ -43,10 +43,10 @@ router.post("/", async (req, res) => {
     }
 
     const [result] = await connection.query(
-      `INSERT INTO orders (customer_name, customer_email, customer_phone,
+       `INSERT INTO orders (user_id, customer_name, customer_email, customer_phone,
         delivery_postal_code, delivery_city, delivery_street_address,
-        order_note, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [customer.name.trim(), customer.email.trim(), customer.phone.trim(),
+        order_note, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [req.session.userId || null, customer.name.trim(), customer.email.trim(), customer.phone.trim(),
         customer.postalCode.trim(), customer.city.trim(), customer.streetAddress.trim(),
         typeof customer.notes === "string" ? customer.notes.trim() : null, total]
     );
