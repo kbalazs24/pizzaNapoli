@@ -13,7 +13,10 @@
 <body>
   <header class="site-header border-bottom">
     <div class="container d-flex align-items-center justify-content-between flex-wrap gap-3 py-3">
-      <a class="brand text-decoration-none" href="index.html"><strong>PIZZA <span>NAPOLI</span></strong><small>NEAPOLITAN PIZZA</small></a>
+      <a class="brand text-decoration-none" href="index.html">
+        <strong>PIZZA <span>NAPOLI</span></strong>
+        <small>NEAPOLITAN PIZZA</small>
+      </a>
       <nav class="d-flex flex-wrap gap-3 gap-lg-4">
         <a class="nav-link" href="index.html">Home</a>
         <a class="nav-link" href="menu.html">Menu</a>
@@ -27,23 +30,51 @@
       </div>
     </div>
   </header>
-  <main class="container py-5"><h1>Create an account</h1><p class="text-muted">Save your details for future orders.</p>
-      <div class="form-panel mx-auto mt-5"><form id="register-form">
-      <div id="register-message" class="alert alert-danger d-none" role="alert"></div>
-      <label class="form-label" for="name">Full name</label><input class="form-control mb-3" id="name" placeholder="Your name" maxlength="100" autocomplete="name" required>
-      <label class="form-label" for="email">Email address</label><input class="form-control mb-3" id="email" placeholder="you@example.com" type="email" maxlength="255" autocomplete="email" required>
-      <label class="form-label" for="phone">Phone number</label><input class="form-control mb-3" id="phone" placeholder="+36" type="tel" maxlength="30" autocomplete="tel">
-      <label class="form-label" for="password">Password</label><input class="form-control mb-3" id="password" type="password" minlength="8" maxlength="128" autocomplete="new-password" required>
-      <label class="form-label" for="confirm">Confirm password</label><input class="form-control mb-4" id="confirm" type="password" minlength="8" maxlength="128" autocomplete="new-password" required>
-      <button class="btn btn-brand w-100" type="submit">Create Account</button>
-    </form><p class="mt-4 mb-0">Already have an account? <a href="login.html">Log in</a></p></div>
+
+  <main class="container py-5">
+    <h1>Create an account</h1>
+    <p class="text-muted">Save your details for future orders.</p>
+    <div class="form-panel mx-auto mt-5">
+      <form id="register-form">
+        <div id="register-message" class="alert alert-danger d-none" role="alert"></div>
+
+        <label class="form-label" for="name">Full name</label>
+        <input class="form-control mb-3" id="name" placeholder="Your name" maxlength="100" autocomplete="name" required>
+
+        <label class="form-label" for="email">Email address</label>
+        <input class="form-control mb-3" id="email" placeholder="you@example.com" type="email" maxlength="255" autocomplete="email" required>
+
+        <label class="form-label" for="phone">Phone number</label>
+        <input class="form-control mb-3" id="phone" placeholder="+36" type="tel" maxlength="30" autocomplete="tel">
+
+        <label class="form-label" for="password">Password</label>
+        <input class="form-control mb-3" id="password" type="password" minlength="8" maxlength="128" autocomplete="new-password" required>
+
+        <label class="form-label" for="confirm">Confirm password</label>
+        <input class="form-control mb-4" id="confirm" type="password" minlength="8" maxlength="128" autocomplete="new-password" required>
+
+        <button class="btn btn-brand w-100" type="submit">Create Account</button>
+      </form>
+      <p class="mt-4 mb-0">Already have an account? <a href="login.html">Log in</a></p>
+    </div>
   </main>
+
   <footer class="site-footer border-top mt-auto">
     <div class="container py-4">
       <div class="row gy-3 align-items-center">
-        <div class="col-md-4"><a class="footer-brand" href="index.html">PIZZA <span>NAPOLI</span></a><p class="text-muted small mb-0">Neapolitan pizza. Budapest.</p></div>
-        <div class="col-md-4"><a href="index.html">Home</a> <a href="menu.html">Menu</a> <a href="our-story.html">Our Story</a> <a href="contact.html">Contact</a></div>
-        <div class="col-md-4 small text-muted">Budapest, Hungary &middot; info@pizzanapoli.hu</div>
+        <div class="col-md-4">
+          <a class="footer-brand" href="index.html">PIZZA <span>NAPOLI</span></a>
+          <p class="text-muted small mb-0">Neapolitan pizza. Budapest.</p>
+        </div>
+        <div class="col-md-4">
+          <a href="index.html">Home</a>
+          <a href="menu.html">Menu</a>
+          <a href="our-story.html">Our Story</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="col-md-4 small text-muted">
+          Budapest, Hungary &middot; info@pizzanapoli.hu
+        </div>
       </div>
       <p class="small text-muted mt-4 mb-0">&copy; 2026 PIZZA NAPOLI &middot; School project concept</p>
     </div>

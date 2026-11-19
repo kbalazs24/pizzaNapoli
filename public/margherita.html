@@ -13,7 +13,10 @@
 <body>
   <header class="site-header border-bottom">
     <div class="container d-flex align-items-center justify-content-between flex-wrap gap-3 py-3">
-      <a class="brand text-decoration-none" href="index.html"><strong>PIZZA <span>NAPOLI</span></strong><small>NEAPOLITAN PIZZA</small></a>
+      <a class="brand text-decoration-none" href="index.html">
+        <strong>PIZZA <span>NAPOLI</span></strong>
+        <small>NEAPOLITAN PIZZA</small>
+      </a>
       <nav class="d-flex flex-wrap gap-3 gap-lg-4">
         <a class="nav-link" href="index.html">Home</a>
         <a class="nav-link active" href="menu.html">Menu</a>
@@ -27,10 +30,13 @@
       </div>
     </div>
   </header>
+
   <main class="container py-5" data-pizza-name="Margherita">
     <a class="back-link" href="menu.html">&larr; Back to Menu</a>
     <div class="row g-5 align-items-start mt-2">
-      <div class="col-lg-7"><img id="pizza-image" alt="Margherita" class="detail-image" src="images/margherita.jpg"></div>
+      <div class="col-lg-7">
+        <img id="pizza-image" alt="Margherita" class="detail-image" src="images/margherita.jpg">
+      </div>
       <div class="col-lg-5">
         <h1 id="pizza-name">Loading...</h1>
         <p id="pizza-price" class="price price-lg"></p>
@@ -46,14 +52,29 @@
         <p id="pizza-error" class="text-danger mt-3" role="alert" hidden></p>
       </div>
     </div>
-    <section class="simple-note border-top mt-5 pt-4"><h2>Made the Neapolitan Way.</h2><p>A single 32 cm pizza, baked fresh to order. Simple ingredients, authentic preparation and no unnecessary extras.</p></section>
+
+    <section class="simple-note border-top mt-5 pt-4">
+      <h2>Made the Neapolitan Way.</h2>
+      <p>A single 32 cm pizza, baked fresh to order. Simple ingredients, authentic preparation and no unnecessary extras.</p>
+    </section>
   </main>
+
   <footer class="site-footer border-top mt-auto">
     <div class="container py-4">
       <div class="row gy-3 align-items-center">
-        <div class="col-md-4"><a class="footer-brand" href="index.html">PIZZA <span>NAPOLI</span></a><p class="text-muted small mb-0">Neapolitan pizza. Budapest.</p></div>
-        <div class="col-md-4"><a href="index.html">Home</a> <a href="menu.html">Menu</a> <a href="our-story.html">Our Story</a> <a href="contact.html">Contact</a></div>
-        <div class="col-md-4 small text-muted">Budapest, Hungary &middot; info@pizzanapoli.hu</div>
+        <div class="col-md-4">
+          <a class="footer-brand" href="index.html">PIZZA <span>NAPOLI</span></a>
+          <p class="text-muted small mb-0">Neapolitan pizza. Budapest.</p>
+        </div>
+        <div class="col-md-4">
+          <a href="index.html">Home</a>
+          <a href="menu.html">Menu</a>
+          <a href="our-story.html">Our Story</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="col-md-4 small text-muted">
+          Budapest, Hungary &middot; info@pizzanapoli.hu
+        </div>
       </div>
       <p class="small text-muted mt-4 mb-0">&copy; 2026 PIZZA NAPOLI &middot; School project concept</p>
     </div>

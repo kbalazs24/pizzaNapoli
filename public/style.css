@@ -1,4 +1,3 @@
-/* PIZZA NAPOLI — Bootstrap layout with minimal custom styling */
 :root {
     --wine: #990d1d;
     --cream: #f8f6f1;
@@ -34,7 +33,7 @@ a {
     color: var(--wine);
     text-decoration: none;
 }
-a: hover {
+a:hover {
     color: #6e0a16;
     text-decoration: underline;
 }

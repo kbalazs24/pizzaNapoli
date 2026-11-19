@@ -13,7 +13,10 @@
 <body>
   <header class="site-header border-bottom">
     <div class="container d-flex align-items-center justify-content-between flex-wrap gap-3 py-3">
-      <a class="brand text-decoration-none" href="index.html"><strong>PIZZA <span>NAPOLI</span></strong><small>NEAPOLITAN PIZZA</small></a>
+      <a class="brand text-decoration-none" href="index.html">
+        <strong>PIZZA <span>NAPOLI</span></strong>
+        <small>NEAPOLITAN PIZZA</small>
+      </a>
       <nav class="d-flex flex-wrap gap-3 gap-lg-4">
         <a class="nav-link" href="index.html">Home</a>
         <a class="nav-link" href="menu.html">Menu</a>
@@ -27,33 +30,53 @@
       </div>
     </div>
   </header>
-   <main class="container py-5">
+
+  <main class="container py-5">
     <h1>Saved Addresses</h1>
     <p><a href="account.html">&larr; Back to Account</a></p>
     <div id="address-message" class="alert d-none" role="alert"></div>
     <div id="address-list" class="row g-3 mt-2"></div>
     <p id="address-empty" class="text-muted mt-3 d-none">You have no saved addresses yet.</p>
+
     <div class="form-panel mt-5">
       <h2 id="address-form-title" class="h4 mb-4">Add a new address</h2>
       <form id="address-form">
-        <label class="form-label" for="street">Street address</label><input class="form-control mb-3" id="street" maxlength="255" autocomplete="street-address" required>
-        <label class="form-label" for="city">City</label><input class="form-control mb-3" id="city" value="Budapest" maxlength="100" autocomplete="address-level2" required>
-        <label class="form-label" for="postal">Postal code</label><input class="form-control mb-3" id="postal" maxlength="10" autocomplete="postal-code" required>
+        <label class="form-label" for="street">Street address</label>
+        <input class="form-control mb-3" id="street" maxlength="255" autocomplete="street-address" required>
+
+        <label class="form-label" for="city">City</label>
+        <input class="form-control mb-3" id="city" value="Budapest" maxlength="100" autocomplete="address-level2" required>
+
+        <label class="form-label" for="postal">Postal code</label>
+        <input class="form-control mb-3" id="postal" maxlength="10" autocomplete="postal-code" required>
+
         <div class="form-check mb-4">
           <input class="form-check-input" type="checkbox" id="is-default">
           <label class="form-check-label" for="is-default">Use as my default address</label>
         </div>
+
         <button class="btn btn-brand" type="submit">Save Address</button>
         <button id="address-cancel" class="btn btn-outline-secondary ms-2 d-none" type="button">Cancel</button>
       </form>
     </div>
   </main>
+
   <footer class="site-footer border-top mt-auto">
     <div class="container py-4">
       <div class="row gy-3 align-items-center">
-        <div class="col-md-4"><a class="footer-brand" href="index.html">PIZZA <span>NAPOLI</span></a><p class="text-muted small mb-0">Neapolitan pizza. Budapest.</p></div>
-        <div class="col-md-4"><a href="index.html">Home</a> <a href="menu.html">Menu</a> <a href="our-story.html">Our Story</a> <a href="contact.html">Contact</a></div>
-        <div class="col-md-4 small text-muted">Budapest, Hungary &middot; info@pizzanapoli.hu</div>
+        <div class="col-md-4">
+          <a class="footer-brand" href="index.html">PIZZA <span>NAPOLI</span></a>
+          <p class="text-muted small mb-0">Neapolitan pizza. Budapest.</p>
+        </div>
+        <div class="col-md-4">
+          <a href="index.html">Home</a>
+          <a href="menu.html">Menu</a>
+          <a href="our-story.html">Our Story</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="col-md-4 small text-muted">
+          Budapest, Hungary &middot; info@pizzanapoli.hu
+        </div>
       </div>
       <p class="small text-muted mt-4 mb-0">&copy; 2026 PIZZA NAPOLI &middot; School project concept</p>
     </div>
