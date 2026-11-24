@@ -55,12 +55,37 @@ router.post("/register", async (req, res) => {
   }
 
   const { name, email, phone } = profile.value;
+  const { postalCode = "", city = "", streetAddress = "" } = body;
+
+  const fields = [
+    [postalCode, 10],
+    [city, 100],
+    [streetAddress, 255]
+  ];
+
+  if (fields.some(([value, max]) => typeof value !== "string" || value.trim().length > max)) {
+    return res.status(400).json({ error: "Invalid address." });
+  }
+
+  const addressValues = [postalCode.trim(), city.trim(), streetAddress.trim()];
+
+  if (addressValues.some(value => value) && addressValues.some(value => !value)) {
+    return res.status(400).json({ error: "Please complete your address." });
+  }
 
   try {
     const passwordHash = await hashPassword(body.password);
     const [result] = await pool.query(
-      "INSERT INTO users (name, email, password_hash, phone) VALUES (?, ?, ?, ?)",
-      [name, email, passwordHash, phone]
+      `INSERT INTO users
+        (name, email, password_hash, phone,
+         delivery_postal_code, delivery_city, delivery_street_address)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [
+        name, email, passwordHash, phone,
+        postalCode.trim() || null,
+        city.trim() || null,
+        streetAddress.trim() || null
+      ]
     );
 
     await startSession(req, result.insertId);

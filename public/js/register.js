@@ -22,6 +22,9 @@ registerForm.addEventListener("submit", async event => {
     name: document.getElementById("name").value,
     email: document.getElementById("email").value,
     phone: document.getElementById("phone").value,
+    postalCode: document.getElementById("postal").value,
+    city: document.getElementById("city").value,
+    streetAddress: document.getElementById("street").value,
     password
   };
 
