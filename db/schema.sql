@@ -4,18 +4,11 @@ CREATE TABLE IF NOT EXISTS users (
   email VARCHAR(255) NOT NULL UNIQUE,
   password_hash VARCHAR(255) NOT NULL,
   phone VARCHAR(30) NULL,
+  delivery_postal_code VARCHAR(10) NULL,
+  delivery_city VARCHAR(100) NULL,
+  delivery_street_address VARCHAR(255) NULL,
   role ENUM('customer', 'admin') NOT NULL DEFAULT 'customer',
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-CREATE TABLE IF NOT EXISTS addresses (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  postal_code VARCHAR(10) NOT NULL,
-  city VARCHAR(100) NOT NULL,
-  street_address VARCHAR(255) NOT NULL,
-  is_default BOOLEAN NOT NULL DEFAULT FALSE,
-  CONSTRAINT fk_addresses_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS pizzas (
