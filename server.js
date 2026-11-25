@@ -35,6 +35,7 @@ app.use("/api/addresses", require("./routes/addresses"));
 app.use("/api/pizzas", require("./routes/pizzas"));
 app.use("/api/orders", require("./routes/orders"));
 app.use("/api/my-orders", require("./routes/my-orders"));
+app.use("/api/payments", require("./routes/payments"));
 
 async function startServer() {
   try {
