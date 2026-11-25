@@ -50,10 +50,13 @@
           <input class="form-control mb-3" id="customer-phone" type="tel" maxlength="30" autocomplete="tel" required>
 
           <label class="form-label" for="customer-zip">Postal code</label>
-          <input class="form-control mb-3" id="customer-zip" type="text" maxlength="10" autocomplete="postal-code" required>
+          <input class="form-control mb-3" id="customer-zip" type="text" maxlength="4" inputmode="numeric" pattern="[0-9]{4}" autocomplete="postal-code" required>
 
           <label class="form-label" for="customer-city">City</label>
-          <input class="form-control mb-3" id="customer-city" type="text" maxlength="100" autocomplete="address-level2" required>
+          <select class="form-select mb-3" id="customer-city" autocomplete="address-level2" required>
+            <option value="">Select a delivery city</option>
+          </select>
+          <p id="delivery-message" class="text-danger"></p>
 
           <label class="form-label" for="customer-address">Street address</label>
           <input class="form-control mb-3" id="customer-address" type="text" maxlength="255" autocomplete="street-address" required>
@@ -86,6 +89,8 @@
           <h2 class="h3">Order summary</h2>
           <div id="order-summary" class="mt-3">Loading...</div>
           <hr>
+          <p>Subtotal: <span id="order-subtotal">0 Ft</span></p>
+          <p>Delivery fee: <span id="delivery-fee">—</span></p>
           <p class="h4">Total: <span id="order-total">0 Ft</span></p>
         </div>
       </aside>

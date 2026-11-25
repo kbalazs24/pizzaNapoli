@@ -8,7 +8,7 @@ router.use(requireAuth);
 router.get("/", async (req, res) => {
   try {
     const [rows] = await pool.query(
-      `SELECT o.id, o.created_at AS createdAt, o.total_price AS totalPrice,
+      `SELECT o.id, o.created_at AS createdAt, o.total_price AS totalPrice, o.delivery_fee AS deliveryFee,
               o.delivery_postal_code AS postalCode, o.delivery_city AS city,
               o.delivery_street_address AS streetAddress,
               p.method AS paymentMethod,
@@ -31,6 +31,7 @@ router.get("/", async (req, res) => {
           id: row.id,
           createdAt: row.createdAt,
           totalPrice: row.totalPrice,
+          deliveryFee: row.deliveryFee,
           paymentMethod: row.paymentMethod,
           address: `${row.postalCode} ${row.city}, ${row.streetAddress}`,
           items: []

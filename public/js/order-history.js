@@ -42,6 +42,7 @@ function renderOrders(orders) {
       ));
     }
     card.append(itemList);
+    card.append(createElement("p", "mb-2", `Delivery fee: ${formatPrice(order.deliveryFee)}`));
     card.append(createElement("p", "fw-bold mb-0", `Total: ${formatPrice(order.totalPrice)}`));
 
     const paymentText = order.paymentMethod

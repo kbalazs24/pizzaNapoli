@@ -13,8 +13,22 @@ currentUserPromise.then(async user => {
     if (!response.ok) return;
     const data = await response.json();
     const address = data.address;
-    if (address.postalCode) document.getElementById("customer-zip").value = address.postalCode;
-    if (address.city) document.getElementById("customer-city").value = address.city;
+    if (address.postalCode && !postalCodeField.value) {
+      postalCodeField.value = address.postalCode;
+      postalCodeField.setCustomValidity("");
+    }
+    if (address.city) {
+      await checkoutReadyPromise;
+      if (!cityField.value) {
+        const area = deliveryAreas.find(area => area.city.toLowerCase() === address.city.trim().toLowerCase());
+        if (area) {
+          cityField.value = area.city;
+          updateDelivery();
+        } else {
+          deliveryMessage.textContent = "Delivery is not available in your saved city. Please select another city.";
+        }
+      }
+    }
     if (address.streetAddress) document.getElementById("customer-address").value = address.streetAddress;
   } catch (error) {
     console.error("Could not load saved address:", error);

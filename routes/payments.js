@@ -44,7 +44,7 @@ router.post("/demo", async (req, res) => {
   try {
     connection = await pool.getConnection();
     await connection.beginTransaction();
-    const orderId = await saveOrder(connection, checkout.customer, checkout.orderItems, checkout.total, "online_card", checkout.userId);
+    const orderId = await saveOrder(connection, checkout.customer, checkout.orderItems, checkout.total, "online_card", checkout.userId, checkout.deliveryFee);
     await connection.commit();
     delete req.session.checkout;
     await new Promise((resolve, reject) => {
