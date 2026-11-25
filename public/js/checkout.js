@@ -30,18 +30,23 @@ cityField.addEventListener("change", () => {
 });
 
 async function loadDeliveryAreas() {
-  const response = await fetch("/api/delivery-areas");
+  const selectedCity = cityField.value;
+  const response = await fetch("/api/delivery-areas", { cache: "no-store" });
   if (!response.ok) throw new Error("Could not load delivery areas.");
   deliveryAreas = await response.json();
+  cityField.options.length = 1;
   for (const area of deliveryAreas) {
     const option = document.createElement("option");
     option.value = area.city;
     option.textContent = area.city;
     cityField.append(option);
   }
+  cityField.value = selectedCity;
 }
 
 async function loadCheckout() {
+  checkoutReady = false;
+  updateDelivery();
   const cart = getCart();
   if (cart.length === 0) {
     orderSummary.textContent = "Your cart is empty.";
@@ -50,7 +55,7 @@ async function loadCheckout() {
 
   try {
     await loadDeliveryAreas();
-    const response = await fetch("/api/pizzas");
+    const response = await fetch("/api/pizzas", { cache: "no-store" });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const pizzas = await response.json();
     let total = 0;
@@ -97,15 +102,21 @@ checkoutForm.addEventListener("submit", async event => {
   };
 
   const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+  const expectedTotal = subtotal + deliveryAreas.find(area => area.city === customer.city).delivery_fee;
   submitting = true;
   placeOrderButton.disabled = true;
   try {
     const response = await fetch("/api/orders", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ customer, items, paymentMethod })
+      body: JSON.stringify({ customer, items, paymentMethod, expectedTotal })
     });
     const result = await response.json();
+    if (response.status === 409) {
+      await loadCheckout();
+      alert(result.error);
+      return;
+    }
     if (!response.ok) {
       alert(result.error || "Could not place your order.");
       return;

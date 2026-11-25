@@ -27,7 +27,7 @@ async function saveOrder(connection, customer, orderItems, total, paymentMethod,
 }
 
 router.post("/", async (req, res) => {
-  const { customer, items, paymentMethod } = req.body || {};
+  const { customer, items, paymentMethod, expectedTotal } = req.body || {};
   const methods = ["cash", "card_on_delivery", "online_card"];
   if (!methods.includes(paymentMethod)) {
     return res.status(400).json({ error: "Please select a payment method." });
@@ -80,6 +80,12 @@ router.post("/", async (req, res) => {
     if (!Number.isSafeInteger(total) || total > 2147483647) {
       await connection.rollback();
       return res.status(400).json({ error: "Invalid order total." });
+    }
+
+    if (total !== expectedTotal) {
+      await connection.rollback();
+      delete req.session.checkout;
+      return res.status(409).json({ error: "The order total has changed. Please review the updated total and place your order again." });
     }
 
     if (paymentMethod === "online_card") {
