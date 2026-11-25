@@ -61,6 +61,22 @@
           <label class="form-label" for="customer-notes">Notes (optional)</label>
           <textarea class="form-control mb-4" id="customer-notes" rows="3"></textarea>
 
+          <fieldset class="mb-4">
+            <legend class="h5">Payment method</legend>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="payment-method" id="payment-cash" value="cash" checked>
+              <label class="form-check-label" for="payment-cash">Cash on delivery</label>
+            </div>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="payment-method" id="payment-card-delivery" value="card_on_delivery">
+              <label class="form-check-label" for="payment-card-delivery">Card on delivery</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="payment-method" id="payment-online" value="online_card">
+              <label class="form-check-label" for="payment-online">Online card payment (DEMO)</label>
+            </div>
+          </fieldset>
+
           <button id="place-order" class="btn btn-brand w-100" type="submit" disabled>Place Order</button>
         </form>
       </section>

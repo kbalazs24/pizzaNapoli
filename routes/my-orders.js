@@ -11,10 +11,13 @@ router.get("/", async (req, res) => {
       `SELECT o.id, o.created_at AS createdAt, o.total_price AS totalPrice,
               o.delivery_postal_code AS postalCode, o.delivery_city AS city,
               o.delivery_street_address AS streetAddress,
+              p.method AS paymentMethod,
               i.pizza_name AS pizzaName, i.quantity, i.unit_price AS unitPrice
        FROM orders o
        JOIN order_items i ON i.order_id = o.id
+       LEFT JOIN payments p ON p.id = (SELECT MAX(id) FROM payments WHERE order_id = o.id)
        WHERE o.user_id = ?
+         AND (p.method IS NULL OR p.method <> 'online_card' OR p.paid_at IS NOT NULL)
        ORDER BY o.created_at DESC, o.id DESC, i.id`,
       [req.session.userId]
     );
@@ -28,6 +31,7 @@ router.get("/", async (req, res) => {
           id: row.id,
           createdAt: row.createdAt,
           totalPrice: row.totalPrice,
+          paymentMethod: row.paymentMethod,
           address: `${row.postalCode} ${row.city}, ${row.streetAddress}`,
           items: []
         };

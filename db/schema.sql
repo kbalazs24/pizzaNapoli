@@ -54,7 +54,6 @@ CREATE TABLE IF NOT EXISTS payments (
   id INT AUTO_INCREMENT PRIMARY KEY,
   order_id INT NOT NULL,
   method ENUM('cash', 'card_on_delivery', 'online_card') NOT NULL,
-  status ENUM('pending', 'paid', 'failed', 'refunded') NOT NULL DEFAULT 'pending',
   amount INT NOT NULL,
   created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   paid_at DATETIME NULL,

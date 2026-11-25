@@ -53,21 +53,30 @@ checkoutForm.addEventListener("submit", async event => {
     notes: document.getElementById("customer-notes").value
   };
 
+  const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
   placeOrderButton.disabled = true;
   try {
     const response = await fetch("/api/orders", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ customer, items })
+      body: JSON.stringify({ customer, items, paymentMethod })
     });
     const result = await response.json();
     if (!response.ok) {
       alert(result.error || "Could not place your order.");
       return;
     }
-    saveCart([]);
-    alert(`Order placed successfully! Order number: ${result.orderId}`);
-    window.location.href = "/";
+    if (paymentMethod === "online_card") {
+      if (result.onlinePayment !== true) {
+        alert("The server is running an outdated payment route. Please restart it.");
+        return;
+      }
+      window.location.href = "payment.html";
+    } else {
+      saveCart([]);
+      alert(`Order placed successfully! Order number: ${result.orderId}. Payment on delivery.`);
+      window.location.href = "/";
+    }
   } catch (error) {
     console.error(error);
     alert("Could not place your order. Please try again.");

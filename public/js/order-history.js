@@ -17,6 +17,11 @@ function renderOrders(orders) {
   ordersList.replaceChildren();
   ordersEmpty.classList.toggle("d-none", orders.length > 0);
 
+  const methods = {
+    cash: "Cash on delivery",
+    card_on_delivery: "Card on delivery",
+    online_card: "Online card (DEMO)"
+  };
   for (const order of orders) {
     const card = createElement("article", "border p-4");
 
@@ -38,6 +43,11 @@ function renderOrders(orders) {
     }
     card.append(itemList);
     card.append(createElement("p", "fw-bold mb-0", `Total: ${formatPrice(order.totalPrice)}`));
+
+    const paymentText = order.paymentMethod
+      ? `Payment: ${methods[order.paymentMethod]}`
+      : "Payment: Not recorded";
+    card.append(createElement("p", "text-muted mt-2 mb-0", paymentText));
 
     ordersList.append(card);
   }
