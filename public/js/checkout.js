@@ -3,6 +3,44 @@ const placeOrderButton = document.getElementById("place-order");
 const orderSummary = document.getElementById("order-summary");
 const orderTotal = document.getElementById("order-total");
 
+const cityField = document.getElementById("customer-city");
+const postalCodeField = document.getElementById("customer-zip");
+postalCodeField.addEventListener("invalid", () => {
+  postalCodeField.setCustomValidity("Please enter a valid 4-digit postal code.");
+});
+postalCodeField.addEventListener("input", () => {
+  postalCodeField.setCustomValidity("");
+});
+const deliveryMessage = document.getElementById("delivery-message");
+let deliveryAreas = [];
+let subtotal = 0;
+let checkoutReady = false;
+let submitting = false;
+
+function updateDelivery() {
+  const area = deliveryAreas.find(area => area.city === cityField.value);
+  document.getElementById("delivery-fee").textContent = area ? `${area.delivery_fee.toLocaleString("hu-HU")} Ft` : "—";
+  orderTotal.textContent = area && checkoutReady ? `${(subtotal + area.delivery_fee).toLocaleString("hu-HU")} Ft` : "—";
+  placeOrderButton.disabled = !area || !checkoutReady || submitting;
+}
+
+cityField.addEventListener("change", () => {
+  deliveryMessage.textContent = "";
+  updateDelivery();
+});
+
+async function loadDeliveryAreas() {
+  const response = await fetch("/api/delivery-areas");
+  if (!response.ok) throw new Error("Could not load delivery areas.");
+  deliveryAreas = await response.json();
+  for (const area of deliveryAreas) {
+    const option = document.createElement("option");
+    option.value = area.city;
+    option.textContent = area.city;
+    cityField.append(option);
+  }
+}
+
 async function loadCheckout() {
   const cart = getCart();
   if (cart.length === 0) {
@@ -11,6 +49,7 @@ async function loadCheckout() {
   }
 
   try {
+    await loadDeliveryAreas();
     const response = await fetch("/api/pizzas");
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const pizzas = await response.json();
@@ -27,8 +66,10 @@ async function loadCheckout() {
       orderSummary.append(row);
     }
 
-    orderTotal.textContent = `${total.toLocaleString("hu-HU")} Ft`;
-    placeOrderButton.disabled = false;
+    subtotal = total;
+    document.getElementById("order-subtotal").textContent = `${subtotal.toLocaleString("hu-HU")} Ft`;
+    checkoutReady = true;
+    updateDelivery();
   } catch (error) {
     console.error(error);
     orderSummary.textContent = "Could not load your order.";
@@ -43,6 +84,8 @@ checkoutForm.addEventListener("submit", async event => {
     return;
   }
 
+  if (submitting || !checkoutReady || !deliveryAreas.some(area => area.city === cityField.value)) return;
+
   const customer = {
     name: document.getElementById("customer-name").value,
     email: document.getElementById("customer-email").value,
@@ -54,6 +97,7 @@ checkoutForm.addEventListener("submit", async event => {
   };
 
   const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+  submitting = true;
   placeOrderButton.disabled = true;
   try {
     const response = await fetch("/api/orders", {
@@ -81,8 +125,9 @@ checkoutForm.addEventListener("submit", async event => {
     console.error(error);
     alert("Could not place your order. Please try again.");
   } finally {
-    placeOrderButton.disabled = false;
+    submitting = false;
+    updateDelivery();
   }
 });
 
-loadCheckout();
+const checkoutReadyPromise = loadCheckout();
