@@ -1,11 +1,3 @@
-const pizzaPages = {
-  "Marinara": "marinara.html",
-  "Margherita": "margherita.html",
-  "Cosacca": "cosacca.html",
-  "Margherita Extra": "margherita-extra.html",
-  "Salsiccia e Friarielli": "salsiccia-e-friarielli.html",
-  "Provola e Pepe": "provola-e-pepe.html"
-};
 const pizzaImages = {
   "Marinara": "/images/marinara.webp",
   "Margherita": "/images/margherita.jpg",
@@ -29,7 +21,7 @@ async function loadPizzas() {
       article.className = "pizza-card h-100";
       const image = document.createElement("img");
       image.className = "pizza-thumb";
-      image.src = pizzaImages[pizza.name] || "/images/margherita.jpg";
+      image.src = pizza.image_path || pizzaImages[pizza.name] || "/images/margherita.jpg";
       image.alt = pizza.name;
       const body = document.createElement("div");
       body.className = "pizza-card-body";
@@ -44,7 +36,7 @@ async function loadPizzas() {
       price.textContent = `${pizza.price.toLocaleString("hu-HU")} Ft`;
       const link = document.createElement("a");
       link.className = "btn btn-brand w-100";
-      link.href = pizzaPages[pizza.name] || "menu.html";
+      link.href = `pizza.html?id=${pizza.id}`;
       link.textContent = "View Pizza";
       body.append(title, description, price, link);
       article.append(image, body);
